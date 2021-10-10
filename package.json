@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "snowpack dev",
+    "start": "sirv public --no-clear --brotli --http2",
+    "dev": "snowpack dev",
     "build": "snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "deploy": "gh-pages --dist 'build' --branch 'gh-pages'"
@@ -19,6 +20,7 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "sirv-cli": "^1.0.14",
     "svelte": "^3.43.1",
     "svelte-awesome": "^2.4.2",
     "tailwindcss": "^2.2.16"
