@@ -16,7 +16,7 @@ import {
 	space,
 	transition_in,
 	transition_out
-} from "../../_snowpack/pkg/svelte.internal.v3.43.1.js";
+} from "../../_snowpack/pkg/svelte/internal.js";
 
 import Button from "./Button.svelte.js";
 

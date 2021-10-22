@@ -19,19 +19,19 @@ import {
 	text,
 	transition_in,
 	transition_out
-} from "../_snowpack/pkg/svelte.internal.v3.43.1.js";
+} from "../_snowpack/pkg/svelte/internal.js";
 
 import "./components/globals/Theme.svelte.js";
 import Bar from './components/Bar.svelte.js';
 import Base from './components/Base.svelte.js';
 import Footer from './components/Footer.svelte.js';
-import { faThumbsUp } from '../_snowpack/pkg/@fortawesome.free-regular-svg-icons.v5.15.4.js';
-import { faRedoAlt, faUndoAlt } from '../_snowpack/pkg/@fortawesome.free-solid-svg-icons.v5.15.4.js';
-import Icon from '../_snowpack/pkg/svelte-awesome.v2.4.2.js';
+import { faThumbsUp } from '../_snowpack/pkg/@fortawesome/free-regular-svg-icons.js';
+import { faRedoAlt, faUndoAlt } from '../_snowpack/pkg/@fortawesome/free-solid-svg-icons.js';
+import Icon from '../_snowpack/pkg/svelte-awesome.js';
 
 // import Icon from 'svelte-awesome/components/Icon.svelte'
 // https://fontawesome.com/icons?d=gallery&q=video&s=regular,solid&m=free
-import { refresh, comment, codeFork, camera, ban } from '../_snowpack/pkg/svelte-awesome.icons.v2.4.2.js';
+import { refresh, comment, codeFork, camera, ban } from '../_snowpack/pkg/svelte-awesome/icons.js';
 
 import {
 	fastForward,
@@ -41,7 +41,7 @@ import {
 	pause,
 	stop,
 	eject
-} from '../_snowpack/pkg/svelte-awesome.icons.v2.4.2.js';
+} from '../_snowpack/pkg/svelte-awesome/icons.js';
 
 function create_else_block_1(ctx) {
 	let t;

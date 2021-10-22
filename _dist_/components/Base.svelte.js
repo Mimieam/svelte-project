@@ -9,7 +9,7 @@ import {
 	insert,
 	noop,
 	safe_not_equal
-} from "../../_snowpack/pkg/svelte.internal.v3.43.1.js";
+} from "../../_snowpack/pkg/svelte/internal.js";
 
 function create_fragment(ctx) {
 	let div;
