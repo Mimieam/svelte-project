@@ -1,0 +1,63 @@
+/* purgecss start ignore */
+
+.toggle.svelte-sjf6eg.svelte-sjf6eg,.toggler.svelte-sjf6eg.svelte-sjf6eg{
+  display:inline-block;
+  vertical-align:middle;
+  margin:10px
+}
+
+.toggler.svelte-sjf6eg.svelte-sjf6eg{
+  color:#ddd;
+  transition:.2s;
+  font-weight:bold
+}
+
+.toggler--is-active.svelte-sjf6eg.svelte-sjf6eg{
+  --tw-text-opacity:1;
+  color:hsla(var(--p) / var(--tw-text-opacity));
+}
+
+.toggle.svelte-sjf6eg.svelte-sjf6eg{
+  position:relative;
+  width:80px;
+  height:35px;
+  border-radius:100px;
+  --tw-bg-opacity:1;
+  background-color:hsla(var(--p) / var(--tw-bg-opacity));;overflow:hidden;
+  box-shadow:inset 0 0 2px 1px rgba(0, 0, 0, 0.05)
+}
+
+.check.svelte-sjf6eg.svelte-sjf6eg{
+  position:absolute;
+  display:block;
+  cursor:pointer;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  opacity:0;
+  z-index:6
+}
+
+.check.svelte-sjf6eg:checked~.switch.svelte-sjf6eg{
+  right:2px;
+  left:57.5%;
+  transition:0.25s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition-property:left, right
+}
+
+.switch.svelte-sjf6eg.svelte-sjf6eg{
+  position:absolute;
+  left:2px;
+  top:2px;
+  bottom:2px;
+  right:57.5%;
+  background-color:#fff;
+  border-radius:36px;
+  z-index:1;
+  transition:0.25s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition-property:left, right;
+  box-shadow:0 1px 2px rgba(0, 0, 0, 0.2)
+}
+
+/* purgecss end ignore */
