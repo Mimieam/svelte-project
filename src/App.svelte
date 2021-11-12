@@ -1,139 +1,231 @@
+<svelte:head>
+	<link rel="stylesheet" href="https://unpkg.com/mono-icons@1.3.1/iconfont/icons.css" >
+	<link rel="stylesheet" href="../tabsorter2.css" >
+	<!-- <link rel="stylesheet" href="/Users/Miezan/Dev/Game/tabSorter2/dist/popup.9ca7e356.js" > -->
+</svelte:head>
+
 <script>
   import "./components/globals/Theme.svelte";
+  import Button from "./components/Button.svelte";
+  import Payment from "./pages/Payment.svelte";
 
-  import Bar from './components/Bar.svelte';
-  import Base from './components/Base.svelte'
 
   import { faThumbsUp} from '@fortawesome/free-regular-svg-icons';
   import { faRedoAlt, faUndoAlt} from '@fortawesome/free-solid-svg-icons';
   import Icon from 'svelte-awesome';
-  // import Icon from 'svelte-awesome/components/Icon.svelte'
   // https://fontawesome.com/icons?d=gallery&q=video&s=regular,solid&m=free
   import { refresh, comment, codeFork, camera, ban } from 'svelte-awesome/icons';
   import { fastForward, fastBackward, circle, play, pause, stop, eject} from 'svelte-awesome/icons';
 
+  let currentState = false;
+  let toggleEffect = true;
+  let active = false;
+  let togglePremium=true;
 
-  let current = ''
-  let isRecording = false
-  let toggleEffect = false
+  let activateThisTab =(e)=>{
+    console.log(e)
+    Array.from(document.querySelectorAll('.tab.tab-lifted')).map(t=> t && t.classList.remove('tab-active'))
+    e.target.classList.add('tab-active')
+  }
 
+  let decode=(mStr) => {
+    to_be_deleted = []  // '2->x'
+    to_be_created = []  // '2->n'
+    to_be_swapped = [] // '2<->3'
 
+    mStr.split(',').map( s => { 
+      let [src, dest] = s.replaceAll(' ', '').split('->')
+      switch(dest){
+        case 'x':
+          to_be_deleted.push(src)
+          break;
+        case 'n':
+          to_be_created.push(src)
+          break;
+        default:
+          if (s.includes('<->')) {
+            [src, dest] = s.replaceAll(' ', '').split('<->')
+            // to_be_swapped.push([[src, dest], [dest, src]])
+          }
+          break;
+      }
+    })
+
+    return [
+      to_be_deleted,
+      to_be_created,
+      to_be_swapped,
+    ]
+  }
+
+  '1<->2,2->x,3<->1,3<->4'
+  let swap = (tabStr, mappingString) => {
+    const [d,c,sp] = decode(mappingString)
+    tabStr
+    sp.map(e => {
+      [e[0], e[1]] = [e[1], e[0]]
+    })
+    return sp
+  }
+
+  // thanks to https://stackoverflow.com/a/44562952/623546 :) 
+  function swapNodes(n1, n2) {
+    Array.from(document.querySelectorAll('.tab.tab-lifted')).map(t=> t && t.classList.remove('tab-active'))
+    n1.classList.add('tab-active')
+    var p1 = n1.parentNode;
+    var p2 = n2.parentNode;
+    var i1, i2;
+
+    if ( !p1 || !p2 || p1.isEqualNode(n2) || p2.isEqualNode(n1) ) return;
+
+    for (var i = 0; i < p1.children.length; i++) {
+        if (p1.children[i].isEqualNode(n1)) {
+            i1 = i;
+        }
+    }
+    for (var i = 0; i < p2.children.length; i++) {
+        if (p2.children[i].isEqualNode(n2)) {
+            i2 = i;
+        }
+    }
+
+    if ( p1.isEqualNode(p2) && i1 < i2 ) {
+        i2++;
+    }
+    p1.insertBefore(n2, p1.children[i1]);
+    p2.insertBefore(n1, p2.children[i2]);
+}
 
 </script>
 
 <style>
 
-/*:global(body) {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}*/
-
-.wrapper {
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(4, 1fr);
-
-  height: 100vh;
-}
-
-.app {
-  grid-area: 1 / 1 / 5 / 5;
-
-  background: #ECF0F1;
-  border: 2px solid #F9AA33;
-  border-radius: 4px;
-  margin: 0.3%;
-}
-
-.bar {
-  height: 60px;
-  background: #344955 ;
-  grid-area: 4/1/5/5;
-  /* max-height: 100px; */
-  border-radius: 5px 5px 0 0;
-  margin-top: auto;
-  justify-items: center;
-  align-items: center;
-}
-
-.button {
-  @apply w-32;
-  position:relative;
-  top: 4px;
-}
-.button:focus{
-  outline: none
-}
-
-.pushed-down,
-.button:active{
-
-  top:8px;
-  @apply border-b-0;
-}
-
-@keyframes pulsate-fwd {
-  0% {
-    transform: scale(1);
+  .wrapper {
+    display: grid;
+    grid-template-rows: repeat(13, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
   }
-  50% {
-    transform: scale(1.01);
-    filter: brightness(120%);
+  .app {
+    /* grid-area: 1 / 1 / 5 / 5; */
+
+    background: #ECF0F1;
+    /* border: 2px solid #F9AA33; */
+    border-radius: 4px;
+    width: 266px;
+    margin: 10px auto;
+    padding: 5px;
+    
+    padding-bottom: 12px;
+    /* margin: 5px auto; */
+    
+    /* border-radius: 8px;
+    padding-bottom: 10px;
+    padding-top: 4px;
+    margin: 8px auto; */
+
+
   }
-  100% {
-    transform: scale(1);
-  }
+
+  .mockup-window:before {
+    content: "";
+    border-radius: 9999px;
+    display: inline-block;
+    height: .75rem;
+    margin-bottom: 0;
+    opacity: .3;
+    width: .75rem;
+    box-shadow: 1.4em 0, 2.8em 0, 4.2em 0;
+    margin-right: 80px;
 }
 
-.pulsate-fwd {
-  @apply inline-block;
-  animation: pulsate-fwd 1s ease-in-out infinite both;
-}
-
-
+/* .tab-lifted.tab-active:first-child:before, 
+.tab-lifted.tab-active:last-child:after {
+  background-image: var(--tab-corner-bg) !important;
+} */
 </style>
-
-<div class="wrapper">
-  <div class="app">
-    <!-- <Base/> -->
-    <!-- <Bar/> -->
+<div class="p-6 card bordered">
+  <div class="form-control">
+    <label class="cursor-pointer label">
+      <span class="label-text">{togglePremium? "Premium": "Basic"} Features</span> 
+      <input type="checkbox" checked="checked" class="toggle toggle-accent" on:change={()=>{
+        togglePremium = !togglePremium
+        console.log(togglePremium)
+      }}>
+    </label>
   </div>
-  <div class="bar">
-    <button
-      on:click="{() => {
-        isRecording = !isRecording
-        current = (current=='RecordBtn'? '' : 'RecordBtn')
-      }}"
-      class="button {current == 'RecordBtn'? 'bg-red-700 pushed-down' : 'bg-red-500 hover:border-red-400 border-b-4'}
-               w-32 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded"
-      >
-      {#if !isRecording}
-        Record
-      {:else}
-        Pause
-      {/if}
-      <!-- basic -->
-      <span class="{isRecording? 'pulsate-fwd text-red-900' : 'text-orange-900'}">
-        <Icon data={circle} />
-      </span>
+</div>
 
-    </button>
-
-    <button
-      on:click="{() => current = (current=='PlayBtn'? '' : 'PlayBtn')}"
-
-      class="button {(current == 'PlayBtn' && toggleEffect)? 'bg-red-700 pushed-down' : 'bg-red-500 border-b-4'}
-               w-32 hover:bg-red-600 text-white font-bold py-2 px-4 border-red-700 hover:border-red-500 rounded"
-      >
-      {#if !isRecording}
-        Play
-      {:else}
-        Stop
-      {/if}
-
-      <Icon data={!isRecording? play: stop} class="text-red-900"/>
-
-    </button>
-
+<div class="">
+  
+  <div class="app container mx-auto w-1/3 grid grid-cols-2 grid-rows-3 gap-x-2 gap-y-2 ">
+    <Button text="Merge All" iconData='i-merge' tooltipText='Merges all open windows into one' tooltipPosition='left'/>
+    <Button text="Merge last 2" iconData='i-merge' iconStyle="transform: rotate(45deg);" disable={togglePremium? false: true}/>
+    <Button text="Sort All" iconData='i-sort-all'/>
+    <Button text="Sort Current" iconData='i-sort'/>
+    <Button text="Focus" iconData='i-target' disable={togglePremium? false: true}/>
+    <Button text="UnFocus" iconData='i-focus-1' disable={togglePremium? false: true}/>
   </div>
+
+  <div class="app container mx-auto w-1/3 grid grid-rows-2 gap-x-2 gap-y-2 grid-flow-col">
+    <div class="grid grid-cols-3 grid-rows-1 gap-x-1">
+      <Button text="Split V" iconData='i-split' tooltipText='Split the Current window Vertically and the resulting window side by side' tooltipPosition='left' disable={togglePremium? false: true}/>
+      <Button text="Shuffle" iconData='i-shuffle' wrapperClass=""/>
+      <Button text="Stack" iconData='i-undo' disable={togglePremium? false: true}/>
+    </div>
+    <div class="grid grid-cols-3 grid-rows-1 gap-x-1">
+      <Button text="Split H" iconData='i-split' iconStyle='transform: rotate(-90deg);' disable={togglePremium? false: true}/>
+      <Button text="Split Domains" iconData='i-flow-merge' wrapperClass="col-span-2" disable={togglePremium? false: true}/>
+    </div>
+  </div>
+
+  <div class="app container mx-auto w-1/3 grid grid-rows-3 gap-x-2 gap-y-2 grid-flow-col">
+    <div class="grid grid-cols-2 grid-rows-1 gap-x-1 gap-y-2">
+      <Button text="Unite" iconData='i-unite-3' tooltipText='Split the Current window Vertically and the resulting window side by side' tooltipPosition='left'/>
+      <Button text="Isolate" iconData='i-isolate' disable={togglePremium? false: true}/>
+    </div>
+    <div class="grid grid-cols-2 grid-rows-1 gap-x-1 gap-y-2">
+      <Button text="Freeze" iconData='i-microchip' disable={togglePremium? false: true}/>
+      <Button text="Close" iconData='i-cancel-2'/>
+    </div>
+    <div class="grid grid-cols-3 grid-rows-1">
+      <Button text="Load" iconData='i-upload-outline' wrapperClass="col-span-3"/>
+    </div>
+  </div>
+
+  <div class="app container mx-auto w-1/3 grid grid-rows-2 gap-x-2 gap-y-2 grid-flow-col">
+    <div class="grid grid-cols-2 grid-rows-1 gap-x-1 gap-y-2">
+      <Button text="Save All" iconData='i-save' tooltipText='Save all open windows' tooltipPosition='left' disable={togglePremium? false: true}/>
+      <Button text="Save Current" iconData='i-save' tooltipText='Save the current window' tooltipPosition='right'/>
+    </div>
+    <div class="grid grid-cols-3 grid-rows-1">
+      <Button text="Remove Duplicates" iconData='i-clone' wrapperClass="col-span-3" disable={togglePremium? false: true}/>
+    </div>
+  </div>
+
+  <div class="app container mx-auto w-1/3 grid grid-rows-2 gap-x-2 gap-y-2 grid-flow-col">
+    <div class="grid grid-cols-5 grid-rows-1 gap-x-1 gap-y-2">
+      <Button text="GitHub" iconData='i-github' disableText={true} tooltipText='Stay updated!' tooltipPosition='left'/>
+      <Button text="Email" iconData='i-paper-plane' disableText={true} tooltipText='email me :)' tooltipPosition='top'/>
+      <Button text="Help" iconData='i-help' disableText={true} tooltipText='Need help?' tooltipPosition='top'/>
+      <Button text="Options" iconData='i-options' tooltipText='Configure Your TS2' tooltipPosition='right' wrapperClass='col-span-2'/>
+    </div>
+    <div class="grid grid-cols-1 grid-rows-1">
+      <Button text={togglePremium? "ManageSub": "Unlock Premium Version"} iconData='i-settings' wrapperClass="col-span-3"/>
+    </div>
+  </div>
+
+  <!-- <div class="container mx-auto mockup-window pt-1 bg-base-300"
+      on:click={activateThisTab}>
+    <a id='T1' draggable=true class="tab tab-lifted"> <Icon data={camera} style='height: 10px;font-size:20px'/>Tab 1</a> 
+    <a id='T2' draggable=true class="tab tab-lifted tab-active">Tab 2</a> 
+    <a id='T3' draggable=true class="tab tab-lifted">Tab 3</a>
+    <div class="flex justify-center px-4 py-16 bg-base-200">
+      Hello!
+    </div>
+    
+  </div> -->
+
+  <Payment/>
 </div>
