@@ -41,6 +41,8 @@
       {id: 1, name: 'Domain classification', tags:['sort']},
       {id: 1, name: 'Split from Here', tags:['split']},
       {id: 1.5, name: 'Sort by Regex', tags:['sort', 'Option']},
+      {id: 1.5, name: 'Accepting Feature Requests', tags:['sort', 'Option']},
+      {id: 1.5, name: 'Support via email', tags:['sort', 'Option']},
     ]
     
 </script>
@@ -80,8 +82,11 @@
 
   <div class=" flex flex-flow flex-row">
     <PricingCard title="Basic" price=0 monthlyDiscount=0 annualDiscount=0  isMonthly={isMonthly} description="Enjoy TS2 Freely Forever" features={basicFeatures}/>
-    <PricingCard title="Premium" price=4 monthlyDiscount=0 annualDiscount=.2 isMonthly={isMonthly} description="Unleash TS2 ~ for the price of a cup of coffee" features={premiumFeatures} popular/>
-    <PricingCard title="Experimental+" buttonText='Support us ' price=20 monthlyDiscount=0 annualDiscount=.4 isMonthly={isMonthly} description="TS2 Bleeding Edge :) " features={PremiumBleedingEdge}/>
+    <PricingCard title="Premium" price=4.99 monthlyDiscount=0 annualDiscount=.2 isMonthly={isMonthly} description="Unleash TS2 ~ for the price of a cup of coffee" features={premiumFeatures} popular/>
+    <PricingCard 
+      title="Experimental+" buttonText='Support us ' 
+      price=19.99 monthlyDiscount=0 annualDiscount=.4 isMonthly={isMonthly} description="TS2 Bleeding Edge :) " features={PremiumBleedingEdge}
+      redirectUrl={"https://buy.stripe.com/test_bIYdRw3ta9oMeEodQQ"}/>
   </div>
 
 </div>

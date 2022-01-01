@@ -10,12 +10,12 @@
   import Payment from "./pages/Payment.svelte";
 
 
-  import { faThumbsUp} from '@fortawesome/free-regular-svg-icons';
-  import { faRedoAlt, faUndoAlt} from '@fortawesome/free-solid-svg-icons';
-  import Icon from 'svelte-awesome';
-  // https://fontawesome.com/icons?d=gallery&q=video&s=regular,solid&m=free
-  import { refresh, comment, codeFork, camera, ban } from 'svelte-awesome/icons';
-  import { fastForward, fastBackward, circle, play, pause, stop, eject} from 'svelte-awesome/icons';
+  // import { faThumbsUp} from '@fortawesome/free-regular-svg-icons';
+  // import { faRedoAlt, faUndoAlt} from '@fortawesome/free-solid-svg-icons';
+  // import Icon from 'svelte-awesome';
+  // // https://fontawesome.com/icons?d=gallery&q=video&s=regular,solid&m=free
+  // import { refresh, comment, codeFork, camera, ban } from 'svelte-awesome/icons';
+  // import { fastForward, fastBackward, circle, play, pause, stop, eject} from 'svelte-awesome/icons';
 
   let currentState = false;
   let toggleEffect = true;

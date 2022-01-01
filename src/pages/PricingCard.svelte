@@ -12,7 +12,8 @@
   export let isMonthly;
   export let popular=false;
   export let buttonText='Support us';
-  export let features = []
+  export let features = [];
+  export let redirectUrl;
   
   let basePrice;
   let discountedPrice;
@@ -22,8 +23,8 @@
   isMonthlyState.subscribe(value => { 
     isMonthly = value
     
-    basePrice = Math.ceil(price * (isMonthly? 1: 12))
-    discountedPrice = Math.ceil(price * ( 1 - (isMonthly ? monthlyDiscount: annualDiscount)) * (isMonthly? 1: 12))
+    basePrice = (price * (isMonthly? 1: 12)).toFixed(2);
+    discountedPrice = (price * ( 1 - (isMonthly ? monthlyDiscount: annualDiscount)) * (isMonthly? 1: 12)).toFixed(2);
 
     // props are passed as strings... 
     isDiscounted = +monthlyDiscount || +annualDiscount ? true : false
@@ -89,7 +90,10 @@
     </span>
     {/each}
   </div>
-  <button class="btn btn-primary">
+  <button class="btn btn-primary" on:click={()=>{
+      console.log("redirectUrl=", redirectUrl)
+      window.open(redirectUrl)
+    }}>
     {buttonText}
   </button>
 </div>
