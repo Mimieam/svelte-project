@@ -1,5 +1,9 @@
 import App from "./App.svelte";
+import Landing from "./pages/Landing.svelte";
 
+// var app = new Landing({
+//   target: document.body,
+// });
 var app = new App({
   target: document.body,
 });
