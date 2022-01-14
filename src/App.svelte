@@ -138,7 +138,7 @@ const runFn = (fnName)=>{
       break;
   
     default:
-      console.log("Not Implemented")
+      console.log(`${fnName} fn Not Implemented`)
       break;
   }
 }

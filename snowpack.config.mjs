@@ -45,7 +45,7 @@ export default {
     splitting: true,
     treeshake: true,
     entrypoints: ["src/index.js", 'src/index2.js'],
-    preload: true,
+    // preload: true,
   },
   packageOptions: {
     // remote enables something called streaming imports. Streaming imports enable Snowpack to bypass npm installation by converting bare imports (e.g., import React from 'react';) into CDN imports from Skypack.
@@ -57,7 +57,7 @@ export default {
   },
   buildOptions: {
     /* ... */
-    sourcemap: true,
-    watch:true,
+    // sourcemap: true,
+    // watch:true,
   },
 };
