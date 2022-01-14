@@ -29,6 +29,9 @@ export default {
   //       },
   //     }
   //   ],
+[  "@snowpack/plugin-optimize", {
+    "preloadCSS": true
+  }],
     '@snowpack/plugin-postcss',
     '@snowpack/plugin-dotenv',
     'tailwindcss'
@@ -57,7 +60,7 @@ export default {
   },
   buildOptions: {
     /* ... */
-    // sourcemap: true,
+    sourcemap: true,
     // watch:true,
   },
 };
